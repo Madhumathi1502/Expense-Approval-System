@@ -1,6 +1,41 @@
+# Maven
 backend/target/
-frontend/node_modules/
-.env
+backend/*.class
+
+# IDE
 .idea/
 .vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Secrets / environment
+.env
+.env.local
+.env.*.local
+*.properties.local
+
+# Spring Boot secrets
+backend/src/main/resources/application.properties
+
+
+# Spring Boot configuration
+backend/src/main/resources/application.properties
+
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+
+# Logs
 *.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
