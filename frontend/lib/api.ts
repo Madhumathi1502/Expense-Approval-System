@@ -58,6 +58,26 @@ export async function login(payload: LoginRequest): Promise<AuthResponse> {
   });
   return handleResponse<AuthResponse>(res);
 }
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+  role: 'EMPLOYEE' | 'MANAGER' | 'FINANCE';
+}
+
+export async function register(
+  payload: RegisterRequest
+): Promise<AuthResponse> {
+  const res = await fetch(`${BASE_URL}/api/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return handleResponse<AuthResponse>(res);
+}
 
 // ─── Expenses ────────────────────────────────────────────────────────────────
 
