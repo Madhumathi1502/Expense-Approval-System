@@ -305,6 +305,40 @@ class ExpenseServiceTest {
     }
 
     // ════════════════════════════════════════════════════════════════════════
+    // TEST 9 — Amount exceeds ₹1,00,000 is rejected
+    // ════════════════════════════════════════════════════════════════════════
+
+    @Test
+    @DisplayName("TEST 9: Expense with amount > 100000 is rejected")
+    void expenseAbove100000IsRejected() {
+        CreateExpenseRequest request = buildExpenseRequest(new BigDecimal("100001"));
+        request.setReceiptReference("receipt-ref-001"); // receipt provided to pass the 2000 check
+
+        assertThatThrownBy(() -> expenseService.createExpense(request, employee))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessageContaining("cannot exceed");
+
+        verify(expenseRepository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("TEST 9b: Expense with amount exactly 100000 is accepted")
+    void expenseAtExactly100000IsAccepted() {
+        CreateExpenseRequest request = buildExpenseRequest(new BigDecimal("100000"));
+        request.setReceiptReference("receipt-boundary-100k"); // required since amount > 2000
+
+        Expense saved = buildSavedExpense(71L, new BigDecimal("100000"), ExpenseStatus.SUBMITTED, employee);
+        when(expenseRepository.save(any())).thenReturn(saved);
+        when(approvalHistoryRepository.save(any())).thenReturn(null);
+
+        ExpenseResponse response = expenseService.createExpense(request, employee);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getStatus()).isEqualTo(ExpenseStatus.SUBMITTED);
+        assertThat(response.getAmount()).isEqualByComparingTo(new BigDecimal("100000"));
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
     // Additional edge-case tests
     // ════════════════════════════════════════════════════════════════════════
 

@@ -24,6 +24,7 @@ public class ExpenseService {
 
     private static final BigDecimal RECEIPT_THRESHOLD    = new BigDecimal("2000");
     private static final BigDecimal FINANCE_THRESHOLD    = new BigDecimal("10000");
+    private static final BigDecimal MAX_AMOUNT           = new BigDecimal("100000");
 
     private final ExpenseRepository expenseRepository;
     private final ApprovalHistoryRepository approvalHistoryRepository;
@@ -37,10 +38,17 @@ public class ExpenseService {
      *
      * Business rules:
      * - Amount must be > 0 (enforced by DTO validation)
+     * - Amount must not exceed 100000
      * - Amount > 2000 requires a receipt reference
      * - Expenses > 10000 are flagged for finance (status still SUBMITTED initially)
      */
     public ExpenseResponse createExpense(CreateExpenseRequest request, User employee) {
+        // Maximum amount rule
+        if (request.getAmount().compareTo(MAX_AMOUNT) > 0) {
+            throw new BadRequestException(
+                    "Expense amount cannot exceed \u20b91,00,000");
+        }
+
         // Receipt rule
         if (request.getAmount().compareTo(RECEIPT_THRESHOLD) > 0) {
             if (request.getReceiptReference() == null || request.getReceiptReference().isBlank()) {
