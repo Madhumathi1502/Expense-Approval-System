@@ -369,10 +369,19 @@ submission/docs/
 
 
 ## Finance Payment
+# Application Screenshots
 
-![Finance Payment](assessment-evidence/screenshots/application/finance-paid.png)
+## Employee Dashboard
 
+![Employee Dashboard](submission/screenshots/application/03-employee-dashboard.png)
 
+## Expense Approval Flow
+
+![Manager Approval](submission/screenshots/application/05-manager-approved.png)
+
+## Finance Payment
+
+![Finance Payment](submission/screenshots/application/06-finance-paid.png)
 # Future Improvements
 
 Some improvements I would add in future versions:
