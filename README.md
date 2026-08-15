@@ -360,19 +360,6 @@ submission/docs/
 
 ## Employee Dashboard
 
-![Employee Dashboard](assessment-evidence/screenshots/application/employee-dashboard.png)
-
-
-## Manager Approval
-
-![Manager Approval](assessment-evidence/screenshots/application/manager-approved.png)
-
-
-## Finance Payment
-# Application Screenshots
-
-## Employee Dashboard
-
 ![Employee Dashboard](submission/screenshots/application/03-employee-dashboard.png)
 
 ## Expense Approval Flow
